@@ -8,6 +8,11 @@ on:
 jobs:
   build-and-deploy:
     environment: dev
+    env:
+      AZURE_FUNCTIONAPP_NAME: 'github-demo-func' 
+      AZURE_FUNCTIONAPP_PACKAGE_PATH: '.'       
+      PYTHON_VERSION: '3.10'                   
+
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -16,7 +21,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: '${{ env.PYTHON_VERSION }}'
 
       - name: Install Azure Functions Core Tools
         run: |
@@ -35,7 +40,19 @@ jobs:
             --parameters @infra/main.parameters.json \
             --debug
 
-      - name: Publish Azure Function
+      - name: 'Resolve Project Dependencies Using Pip'
+        shell: bash
         run: |
-          func azure functionapp publish github-demo-func --python --build local
-        working-directory: azure-function
+          pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt --target=".python_packages/lib/site-packages"
+          popd            
+
+      - name: 'Run Azure Functions Action'
+        uses: Azure/functions-action@v1
+        id: fa
+        with:
+          app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
+          package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
+          scm-do-build-during-deployment: true
+          enable-oryx-build: true
