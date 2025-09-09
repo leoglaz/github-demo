@@ -6,10 +6,10 @@
       "value": "github-demo-func"
     },
     "location": {
-      "value": "eastus"
+      "value": "canadacentral"
     },
     "storageAccountName": {
-      "value": "githubdemostorage"
+      "value": "demo-github"
     }
   }
 }
