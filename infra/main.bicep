@@ -21,7 +21,7 @@ resource functionApp 'Microsoft.Web/sites@2022-09-01' = {
   properties: {
     serverFarmId: consumptionPlan.id
     siteConfig: {
-      linuxFxVersion: 'PYTHON|3.10'
+      linuxFxVersion: 'PYTHON|3.11'
       appSettings: [
         {
           name: 'AzureWebJobsStorage'
@@ -42,6 +42,10 @@ resource consumptionPlan 'Microsoft.Web/serverfarms@2022-09-01' = {
   sku: {
     name: 'Y1'
     tier: 'Dynamic'
+  }
+  properties: {
+    isSpot: false
+    reserved: true // Required for Linux
   }
   kind: 'functionapp'
 }
