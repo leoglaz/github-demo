@@ -10,7 +10,7 @@ jobs:
     environment: dev
     env:
       AZURE_FUNCTIONAPP_NAME: 'github-demo-func' 
-      AZURE_FUNCTIONAPP_PACKAGE_PATH: '.'       
+      AZURE_FUNCTIONAPP_PACKAGE_PATH: './src/demo-function'       
       PYTHON_VERSION: '3.10'                   
 
     runs-on: ubuntu-latest
