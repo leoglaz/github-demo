@@ -21,9 +21,6 @@ jobs:
         run: |
           npm install -g azure-functions-core-tools@4 --unsafe-perm true
 
-      - name: Install Azure CLI
-        uses: azure/setup-azure@v3
-
       - name: Login to Azure
         uses: azure/login@v1
         with:
