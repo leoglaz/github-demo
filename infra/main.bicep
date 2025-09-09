@@ -5,7 +5,7 @@ param environmentName string = 'dev'
 
 var resourceToken = toLower(uniqueString(subscription().id, environmentName, location))
 
-resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
+resource storageAccount 'Microsoft.Storage/storageAccounts@2025-01-01' = {
   name: 'st${resourceToken}'
   location: location
   sku: {
