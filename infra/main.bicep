@@ -15,6 +15,7 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
 
   properties: {
     allowSharedKeyAccess: true
+    isLocalUserEnabled: true
     publicNetworkAccess: 'Enabled'
   }
 }
