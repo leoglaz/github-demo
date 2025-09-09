@@ -7,9 +7,6 @@
     },
     "location": {
       "value": "canadacentral"
-    },
-    "storageAccountName": {
-      "value": "demo-github"
     }
   }
 }

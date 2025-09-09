@@ -1,9 +1,12 @@
 param functionAppName string
 param location string = resourceGroup().location
-param storageAccountName string
+
+param environmentName string = 'dev'
+
+var resourceToken = toLower(uniqueString(subscription().id, environmentName, location))
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
-  name: storageAccountName
+  name: 'st${resourceToken}'
   location: location
   sku: {
     name: 'Standard_LRS'
