@@ -17,10 +17,11 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
 resource functionApp 'Microsoft.Web/sites@2022-09-01' = {
   name: functionAppName
   location: location
-  kind: 'functionapp'
+  kind: 'functionapp,linux'
   properties: {
     serverFarmId: consumptionPlan.id
     siteConfig: {
+      linuxFxVersion: 'Python|3.10'
       appSettings: [
         {
           name: 'AzureWebJobsStorage'

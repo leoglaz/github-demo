@@ -1,0 +1,44 @@
+# Azure DevOps Pipeline to Deploy Azure Function with Bicep
+# Save this file as azure-pipelines.yml in your repo root
+
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  azureSubscription: 'AzureServiceConnection' # Replace with your Azure DevOps service connection name
+  resourceGroup: 'demo-github' # Replace with your resource group name
+  functionAppName: 'github-demo-func' # Replace with your function app name
+
+steps:
+- checkout: self
+
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.10'
+    addToPath: true
+
+- script: |
+    npm install -g azure-functions-core-tools@4 --unsafe-perm true
+  displayName: 'Install Azure Functions Core Tools'
+
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: $(azureSubscription)
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
+      az deployment group create \
+        --resource-group $(resourceGroup) \
+        --template-file infra/main.bicep \
+        --parameters @infra/main.parameters.json
+  displayName: 'Deploy resources with Bicep'
+
+- script: |
+    func azure functionapp publish $(functionAppName) --python
+  displayName: 'Publish Azure Function'
+  workingDirectory: azure-function
