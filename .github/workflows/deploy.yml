@@ -32,7 +32,8 @@ jobs:
           az deployment group create \
             --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} \
             --template-file infra/main.bicep \
-            --parameters @infra/main.parameters.json
+            --parameters @infra/main.parameters.json \ 
+            --debug
 
       - name: Publish Azure Function
         run: |
