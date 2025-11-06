@@ -1,5 +1,5 @@
 # Sample GitHub Demo: Azure Function + Bicep + GitHub Actions
-
+(TEST)
 This repository demonstrates:
 - An Azure Function written in Python
 - Bicep code to deploy the Azure Function on a Consumption plan
